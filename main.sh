@@ -78,6 +78,7 @@ main_menu() {
         echo -e "${GREEN}[1]${NC} PufferPanel"
         echo -e "${GREEN}[2]${NC} Root"
         echo -e "${GREEN}[3]${NC} Tools"
+        echo -e "${GREEN}[4]${NC} HVM Panel"
         echo -e "${RED}[0]${NC} Exit"
         echo ""
 
@@ -92,6 +93,9 @@ main_menu() {
                 ;;
             3)
                 tools_menu
+                ;;
+            4)
+                hvm_menu
                 ;;
             0)
                 clear
@@ -241,6 +245,41 @@ tools_menu() {
 
                 sudo apt-get update && sudo apt-get install cloudflared -y
 
+                pause
+                ;;
+            0)
+                break
+                ;;
+            *)
+                echo -e "${RED}Invalid Option!${NC}"
+                sleep 1
+                ;;
+        esac
+    done
+}
+
+# HVM Menu
+hvm_menu() {
+    while true; do
+        banner
+
+        echo ""
+        echo -e "${MAGENTA}╔══════════════════════════════╗${NC}"
+        echo -e "${MAGENTA}║${WHITE}         HVM PANEL           ${MAGENTA}║${NC}"
+        echo -e "${MAGENTA}╚══════════════════════════════╝${NC}"
+
+        echo -e "${GREEN}[1]${NC} Run HVM Panel"
+        echo -e "${RED}[0]${NC} Back"
+        echo ""
+
+        read -p "Select Option ➜ " hvm
+
+        case $hvm in
+            1)
+                clear
+                echo -e "${CYAN}Launching HVM Panel...${NC}"
+                sleep 1
+                bash <(curl -s https://raw.githubusercontent.com/officialraghavwarrior-commits/test/refs/heads/main/test.sh)
                 pause
                 ;;
             0)
