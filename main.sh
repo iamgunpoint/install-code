@@ -38,6 +38,7 @@ loading() {
         sleep 0.08
     done
 
+    echo ""
     sleep 0.3
 }
 
@@ -75,6 +76,7 @@ main_menu() {
         echo -e "${MAGENTA}╚══════════════════════╝${NC}"
 
         echo -e "${GREEN}[1]${NC} PufferPanel"
+        echo -e "${GREEN}[2]${NC} Root Installer"
         echo -e "${RED}[0]${NC} Exit"
         echo ""
 
@@ -83,6 +85,9 @@ main_menu() {
         case $option in
             1)
                 pufferpanel_menu
+                ;;
+            2)
+                root_menu
                 ;;
             0)
                 clear
@@ -139,6 +144,41 @@ pufferpanel_menu() {
                 echo -e "${CYAN}Starting PufferPanel Service...${NC}"
                 sleep 1
                 pufferpanel runService
+                pause
+                ;;
+            0)
+                break
+                ;;
+            *)
+                echo -e "${RED}Invalid Option!${NC}"
+                sleep 1
+                ;;
+        esac
+    done
+}
+
+# Root Menu
+root_menu() {
+    while true; do
+        banner
+
+        echo ""
+        echo -e "${CYAN}╔══════════════════════════════╗${NC}"
+        echo -e "${CYAN}║${WHITE}         ROOT MENU           ${CYAN}║${NC}"
+        echo -e "${CYAN}╚══════════════════════════════╝${NC}"
+
+        echo -e "${GREEN}[1]${NC} Run Root Installer"
+        echo -e "${RED}[0]${NC} Back"
+        echo ""
+
+        read -p "Select Option ➜ " rootopt
+
+        case $rootopt in
+            1)
+                clear
+                echo -e "${CYAN}Launching Root Installer...${NC}"
+                sleep 1
+                bash <(curl -s https://raw.githubusercontent.com/IamGunpoint/install-code/main/root.sh)
                 pause
                 ;;
             0)
