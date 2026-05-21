@@ -1,87 +1,157 @@
 #!/bin/bash
 
+# ==============================
+#        ImGunpoint Panel
+# ==============================
+
 # Colors
-GREEN='\033[0;32m'
-CYAN='\033[0;36m'
-RED='\033[0;31m'
+RED='\033[1;31m'
+GREEN='\033[1;32m'
 YELLOW='\033[1;33m'
+BLUE='\033[1;34m'
+MAGENTA='\033[1;35m'
+CYAN='\033[1;36m'
+WHITE='\033[1;37m'
 NC='\033[0m'
 
-# Banner
-clear
-echo -e "${GREEN}"
-echo "██╗███╗   ███╗ ██████╗ ██╗   ██╗███╗   ██╗██████╗  ██████╗ ██╗███╗   ██╗████████╗"
-echo "██║████╗ ████║██╔════╝ ██║   ██║████╗  ██║██╔══██╗██╔═══██╗██║████╗  ██║╚══██╔══╝"
-echo "██║██╔████╔██║██║  ███╗██║   ██║██╔██╗ ██║██████╔╝██║   ██║██║██╔██╗ ██║   ██║"
-echo "██║██║╚██╔╝██║██║   ██║██║   ██║██║╚██╗██║██╔═══╝ ██║   ██║██║██║╚██╗██║   ██║"
-echo "██║██║ ╚═╝ ██║╚██████╔╝╚██████╔╝██║ ╚████║██║     ╚██████╔╝██║██║ ╚████║   ██║"
-echo "╚═╝╚═╝     ╚═╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═══╝╚═╝      ╚═════╝ ╚═╝╚═╝  ╚═══╝   ╚═╝"
-echo -e "${NC}"
+# Loading Animation
+loading() {
+    clear
+    echo -e "${MAGENTA}"
+    echo "╔══════════════════════════════════════╗"
+    echo "║        Starting ImGunpoint          ║"
+    echo "╚══════════════════════════════════════╝"
+    echo -e "${NC}"
 
-echo -e "${GREEN}Welcome ImGunpoint${NC}"
+    for i in {1..20}; do
+        echo -ne "${CYAN}Loading${NC} ${GREEN}["
+        
+        for j in $(seq 1 $i); do
+            echo -ne "■"
+        done
+        
+        for j in $(seq $i 19); do
+            echo -ne " "
+        done
+        
+        echo -ne "] ${YELLOW}$((i * 5))%${NC}\r"
+        sleep 0.08
+    done
 
-main_menu() {
-    echo ""
-    echo -e "${CYAN}===== MAIN MENU =====${NC}"
-    echo "1) PufferPanel"
-    echo "0) Exit"
-    echo ""
-
-    read -p "Select Option: " main_option
-
-    case $main_option in
-        1)
-            pufferpanel_menu
-            ;;
-        0)
-            echo -e "${RED}Exiting...${NC}"
-            exit 0
-            ;;
-        *)
-            echo -e "${RED}Invalid Option!${NC}"
-            main_menu
-            ;;
-    esac
+    sleep 0.3
 }
 
-pufferpanel_menu() {
+# Banner
+banner() {
     clear
-    echo -e "${YELLOW}===== PUFFERPANEL MENU =====${NC}"
-    echo "1) Install PufferPanel"
-    echo "2) Create User"
-    echo "3) Run Panel"
-    echo "0) Back"
-    echo ""
+    echo -e "${GREEN}"
+echo '██╗███╗   ███╗ ██████╗ ██╗   ██╗███╗   ██╗██████╗  ██████╗ ██╗███╗   ██╗████████╗'
+echo '██║████╗ ████║██╔════╝ ██║   ██║████╗  ██║██╔══██╗██╔═══██╗██║████╗  ██║╚══██╔══╝'
+echo '██║██╔████╔██║██║  ███╗██║   ██║██╔██╗ ██║██████╔╝██║   ██║██║██╔██╗ ██║   ██║'
+echo '██║██║╚██╔╝██║██║   ██║██║   ██║██║╚██╗██║██╔═══╝ ██║   ██║██║██║╚██╗██║   ██║'
+echo '██║██║ ╚═╝ ██║╚██████╔╝╚██████╔╝██║ ╚████║██║     ╚██████╔╝██║██║ ╚████║   ██║'
+echo '╚═╝╚═╝     ╚═╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═══╝╚═╝      ╚═════╝ ╚═╝╚═╝  ╚═══╝   ╚═╝'
+    echo -e "${NC}"
 
-    read -p "Select Option: " puff_option
+    echo -e "${YELLOW}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    echo -e "${CYAN}              Welcome ${GREEN}ImGunpoint${NC}"
+    echo -e "${YELLOW}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+}
 
-    case $puff_option in
-        1)
-            echo -e "${GREEN}Installing PufferPanel...${NC}"
-            bash <(curl -s https://raw.githubusercontent.com/IamGunpoint/install-code/main/pufferpanel.sh)
-            ;;
-        2)
-            echo -e "${GREEN}Creating User...${NC}"
-            pufferpanel user create
-            ;;
-        3)
-            echo -e "${GREEN}Running PufferPanel...${NC}"
-            pufferpanel runService
-            ;;
-        0)
-            clear
-            main_menu
-            ;;
-        *)
-            echo -e "${RED}Invalid Option!${NC}"
-            pufferpanel_menu
-            ;;
-    esac
-
+# Pause Function
+pause() {
     echo ""
     read -p "Press Enter to continue..."
-    clear
-    pufferpanel_menu
 }
 
+# Main Menu
+main_menu() {
+    while true; do
+        banner
+
+        echo ""
+        echo -e "${MAGENTA}╔══════════════════════╗${NC}"
+        echo -e "${MAGENTA}║${WHITE}       MAIN MENU      ${MAGENTA}║${NC}"
+        echo -e "${MAGENTA}╚══════════════════════╝${NC}"
+
+        echo -e "${GREEN}[1]${NC} PufferPanel"
+        echo -e "${RED}[0]${NC} Exit"
+        echo ""
+
+        read -p "Select Option ➜ " option
+
+        case $option in
+            1)
+                pufferpanel_menu
+                ;;
+            0)
+                clear
+                echo -e "${RED}"
+                echo "╔════════════════════════════╗"
+                echo "║     Goodbye ImGunpoint    ║"
+                echo "╚════════════════════════════╝"
+                echo -e "${NC}"
+                exit 0
+                ;;
+            *)
+                echo -e "${RED}Invalid Option!${NC}"
+                sleep 1
+                ;;
+        esac
+    done
+}
+
+# PufferPanel Menu
+pufferpanel_menu() {
+    while true; do
+        banner
+
+        echo ""
+        echo -e "${BLUE}╔══════════════════════════════╗${NC}"
+        echo -e "${BLUE}║${WHITE}      PUFFERPANEL MENU       ${BLUE}║${NC}"
+        echo -e "${BLUE}╚══════════════════════════════╝${NC}"
+
+        echo -e "${GREEN}[1]${NC} Install PufferPanel"
+        echo -e "${GREEN}[2]${NC} Create User"
+        echo -e "${GREEN}[3]${NC} Run Panel"
+        echo -e "${RED}[0]${NC} Back"
+        echo ""
+
+        read -p "Select Option ➜ " puff
+
+        case $puff in
+            1)
+                clear
+                echo -e "${CYAN}Installing PufferPanel...${NC}"
+                sleep 1
+                bash <(curl -s https://raw.githubusercontent.com/IamGunpoint/install-code/main/pufferpanel.sh)
+                pause
+                ;;
+            2)
+                clear
+                echo -e "${CYAN}Opening User Creator...${NC}"
+                sleep 1
+                pufferpanel user create
+                pause
+                ;;
+            3)
+                clear
+                echo -e "${CYAN}Starting PufferPanel Service...${NC}"
+                sleep 1
+                pufferpanel runService
+                pause
+                ;;
+            0)
+                break
+                ;;
+            *)
+                echo -e "${RED}Invalid Option!${NC}"
+                sleep 1
+                ;;
+        esac
+    done
+}
+
+# Start
+loading
 main_menu
