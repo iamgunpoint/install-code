@@ -76,7 +76,8 @@ main_menu() {
         echo -e "${MAGENTA}╚══════════════════════╝${NC}"
 
         echo -e "${GREEN}[1]${NC} PufferPanel"
-        echo -e "${GREEN}[2]${NC} Root Installer"
+        echo -e "${GREEN}[2]${NC} Root"
+        echo -e "${GREEN}[3]${NC} Tools"
         echo -e "${RED}[0]${NC} Exit"
         echo ""
 
@@ -88,6 +89,9 @@ main_menu() {
                 ;;
             2)
                 root_menu
+                ;;
+            3)
+                tools_menu
                 ;;
             0)
                 clear
@@ -127,7 +131,7 @@ pufferpanel_menu() {
         case $puff in
             1)
                 clear
-                echo -e "${CYAN}Installing PufferPanel...${NC}"
+                echo -e "${CYAN}Installing...${NC}"
                 sleep 1
                 bash <(curl -s https://raw.githubusercontent.com/IamGunpoint/install-code/main/pufferpanel.sh)
                 pause
@@ -141,7 +145,7 @@ pufferpanel_menu() {
                 ;;
             3)
                 clear
-                echo -e "${CYAN}Starting PufferPanel Service...${NC}"
+                echo -e "${CYAN}Starting Service...${NC}"
                 sleep 1
                 pufferpanel runService
                 pause
@@ -176,9 +180,67 @@ root_menu() {
         case $rootopt in
             1)
                 clear
-                echo -e "${CYAN}Launching Root Installer...${NC}"
+                echo -e "${CYAN}Launching...${NC}"
                 sleep 1
                 bash <(curl -s https://raw.githubusercontent.com/IamGunpoint/install-code/main/root.sh)
+                pause
+                ;;
+            0)
+                break
+                ;;
+            *)
+                echo -e "${RED}Invalid Option!${NC}"
+                sleep 1
+                ;;
+        esac
+    done
+}
+
+# Tools Menu
+tools_menu() {
+    while true; do
+        banner
+
+        echo ""
+        echo -e "${YELLOW}╔══════════════════════════════╗${NC}"
+        echo -e "${YELLOW}║${WHITE}         TOOLS MENU          ${YELLOW}║${NC}"
+        echo -e "${YELLOW}╚══════════════════════════════╝${NC}"
+
+        echo -e "${GREEN}[1]${NC} Tool 1"
+        echo -e "${GREEN}[2]${NC} Tool 2"
+        echo -e "${GREEN}[3]${NC} Tool 3"
+        echo -e "${RED}[0]${NC} Back"
+        echo ""
+
+        read -p "Select Option ➜ " tool
+
+        case $tool in
+            1)
+                clear
+                echo -e "${CYAN}Running...${NC}"
+                sleep 1
+                curl -fsSL https://tailscale.com/install.sh | sh
+                pause
+                ;;
+            2)
+                clear
+                echo -e "${CYAN}Running...${NC}"
+                sleep 1
+                curl -sSf https://sshx.io/get | sh
+                pause
+                ;;
+            3)
+                clear
+                echo -e "${CYAN}Running...${NC}"
+                sleep 1
+
+                sudo mkdir -p --mode=0755 /usr/share/keyrings
+                curl -fsSL https://pkg.cloudflare.com/cloudflare-public-v2.gpg | sudo tee /usr/share/keyrings/cloudflare-public-v2.gpg >/dev/null
+
+                echo 'deb [signed-by=/usr/share/keyrings/cloudflare-public-v2.gpg] https://pkg.cloudflare.com/cloudflared any main' | sudo tee /etc/apt/sources.list.d/cloudflared.list
+
+                sudo apt-get update && sudo apt-get install cloudflared -y
+
                 pause
                 ;;
             0)
