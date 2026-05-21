@@ -210,9 +210,9 @@ tools_menu() {
         echo -e "${YELLOW}║${WHITE}         TOOLS MENU          ${YELLOW}║${NC}"
         echo -e "${YELLOW}╚══════════════════════════════╝${NC}"
 
-        echo -e "${GREEN}[1]${NC} Tool 1"
-        echo -e "${GREEN}[2]${NC} Tool 2"
-        echo -e "${GREEN}[3]${NC} Tool 3"
+        echo -e "${GREEN}[1]${NC} Tailscale"
+        echo -e "${GREEN}[2]${NC} SSHX"
+        echo -e "${GREEN}[3]${NC} Cloudflare"
         echo -e "${RED}[0]${NC} Back"
         echo ""
 
